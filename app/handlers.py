@@ -42,12 +42,12 @@ def echo(update, context):
         elif has_question(data_ar, message_text):
             answer = get_answer(data_ar, message_text)
             update.message.reply_text(answer)
-            update_enquiry_user(user_id)
+            update_enquiry_user(str(user_id))
 
         elif has_question(data_en, message_text):
             answer = get_answer(data_en, message_text)
             update.message.reply_text(answer)
-            update_enquiry_user(user_id)
+            update_enquiry_user(str(user_id))
 
         elif update.message.reply_to_message and "Feedback" in update.message.reply_to_message.text:
             # Extract the user ID and message ID from the feedback message using regex pattern
