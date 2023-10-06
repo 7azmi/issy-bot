@@ -12,15 +12,6 @@ db_user = os.environ.get("PGUSER")
 db_password = os.environ.get("PGPASSWORD")
 db_name = os.environ.get("PGDATABASE")
 
-
-
-
-SYSTEM_RULE = {
-    "role": "system",
-    "content": "you are friendly bot and gives answers up to 50 words.",
-}
-
-
 def create_db():
     # Create a connection to the database
     with psycopg2.connect(
@@ -31,91 +22,127 @@ def create_db():
             """
             CREATE TABLE IF NOT EXISTS users (
                 telegram_id TEXT PRIMARY KEY,
-                history TEXT
+                enquiries INTEGER,
+                current_language TEXT
             );
              """
         )
         conn.commit()
 
+def delete_db():
+    # Create a connection to the database
+    with psycopg2.connect(
+        host=db_host, user=db_user, password=db_password, database=db_name
+    ) as conn:
+        c = conn.cursor()
+        c.execute("DROP TABLE IF EXISTS users;")
+        conn.commit()
 
-def add_new_user(user: str):
-    new_user = {"telegram_id": user, "history": json.dumps([SYSTEM_RULE])}
+def add_new_user(user: str, language: str = "en"):
+    new_user = {"telegram_id": user, "enquiries": 0, "current_language": language}
 
     with psycopg2.connect(
         host=db_host, user=db_user, password=db_password, database=db_name
     ) as conn:
         c = conn.cursor()
         c.execute(
-            "INSERT INTO users (telegram_id, history) VALUES (%s, %s) ON CONFLICT DO NOTHING;",
-            (new_user["telegram_id"], new_user["history"]),
+            "INSERT INTO users (telegram_id, enquiries, current_language) VALUES (%s, %s, %s) ON CONFLICT DO NOTHING;",
+            (new_user["telegram_id"], new_user["enquiries"], new_user["current_language"]),
         )
         conn.commit()
 
 
-def retrieve_history(user: str) -> Dict:
-    with psycopg2.connect(
-        host=db_host, user=db_user, password=db_password, database=db_name
-    ) as conn:
-        c = conn.cursor()
-        c.execute("SELECT * FROM users WHERE telegram_id = %s", (user,))
-        row = c.fetchone()
+def update_enquiry_user(telegram_id):
+    try:
+        # Create a connection to the database
+        with psycopg2.connect(
+                host=db_host, user=db_user, password=db_password, database=db_name
+        ) as conn:
+            c = conn.cursor()
 
-    return row
-
-
-def reset_history_user(user: str):
-    with psycopg2.connect(
-        host=db_host, user=db_user, password=db_password, database=db_name
-    ) as conn:
-        c = conn.cursor()
-        c.execute(
-            "UPDATE users SET history = %sWHERE telegram_id = %s",
-            (json.dumps([SYSTEM_RULE]), user),
-        )
-
-
-def create_question_prompt(row: Dict, question: str) -> Dict:
-    history = json.loads(row[1])
-    rule = {"role": "user", "content": question}
-    history.append(rule)
-    return history
-
-
-def update_history_user(user: str, question: str, answer: str):
-    with psycopg2.connect(
-        host=db_host, user=db_user, password=db_password, database=db_name
-    ) as conn:
-        c = conn.cursor()
-        c.execute("SELECT * FROM users WHERE telegram_id = %s", (user,))
-        row = c.fetchone()
-        if row:
-            user = {"telegram_id": row[0], "history": json.loads(row[1])}
-            question_rule = {"role": "user", "content": question}
-            answer_rule = {"role": "assistant", "content": answer}
-            user["history"].append(question_rule)
-            user["history"].append(answer_rule)
-            updated_history = json.dumps(user["history"])
+            # Increment the user's enquiries by 1
             c.execute(
-                "UPDATE users SET history = %sWHERE telegram_id = %s",
-                (updated_history, user["telegram_id"]),
+                """
+                UPDATE users
+                SET enquiries = enquiries + 1
+                WHERE telegram_id = %s
+                """,
+                (telegram_id,)
             )
+            conn.commit()
 
+    except psycopg2.Error as e:
+        print(f"Error updating user: {e}")
+
+
+def set_user_language(telegram_id, current_language):
+    try:
+        # Create a connection to the database
+        with psycopg2.connect(
+                host=db_host, user=db_user, password=db_password, database=db_name
+        ) as conn:
+            c = conn.cursor()
+
+            # Update the user's current_language
+            c.execute(
+                """
+                UPDATE users
+                SET current_language = %s
+                WHERE telegram_id = %s
+                """,
+                (current_language, telegram_id)
+            )
+            conn.commit()
+
+    except psycopg2.Error as e:
+        print(f"Error setting user language: {e}")
+
+
+def get_user_language(telegram_id):
+    try:
+        # Create a connection to the database
+        with psycopg2.connect(
+                host=db_host, user=db_user, password=db_password, database=db_name
+        ) as conn:
+            c = conn.cursor()
+
+            # Retrieve the user's current_language
+            c.execute(
+                """
+                SELECT current_language
+                FROM users
+                WHERE telegram_id = %s
+                """,
+                (telegram_id,)
+            )
+            result = c.fetchone()
+
+            if result:
+                return result[0]  # Return the current_language
+            else:
+                return None  # User not found
+
+    except psycopg2.Error as e:
+        print(f"Error getting user language: {e}")
 
 if __name__ == "__main__":
+    #delete_db()
 
+    create_db()
     user = "323232"
-    add_new_user(user)
+    #add_new_user(user)
 
-    question = "What's the meaning of life?"
-    answer = "42"
+    #question = "What's the meaning of life?"
+    #answer = "42"
 
-    update_history_user(user=user, question=question, answer=answer)
+    #update_enquiry_user(user)
 
-    row = retrieve_history(user)
-    print("after update: ", row)
+    set_user_language(user, 'ar')
+    print(get_user_language(user))
+    #print("after update: ", row)
 
-    reset_history_user(user)
-    print("\n" * 4)
+    #reset_history_user(user)
+    #print("\n" * 4)
 
-    row = retrieve_history(user)
-    print("After reset: ", row)
+    #row = retrieve_history(user)
+    #print("After reset: ", row)
