@@ -3,7 +3,6 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardRe
 from telegram.ext import CommandHandler, CallbackQueryHandler
 from database.database import *
 from app.menu import *
-import asyncio
 
 def echo(update, context):
     user_id = update.message.from_user.id

@@ -1,17 +1,11 @@
 import logging
 import logging.config
 import os
-import subprocess
-import time
-import telegram
-from dotenv import load_dotenv
 import sys
 from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
 
-import app
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from database.database import *
 from app.handlers import *
 
 load_dotenv("app/.env")

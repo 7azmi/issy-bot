@@ -1,7 +1,5 @@
-import telegram
 from telegram import Update
 from telegram import ReplyKeyboardMarkup, KeyboardButton
-import statistics
 
 data_en = {}
 data_ar = {}
