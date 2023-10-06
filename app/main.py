@@ -51,7 +51,7 @@ def main():
 class DefaultConfig:
     PORT = int(os.environ.get("PORT", 5000))
     TELEGRAM_TOKEN = os.environ.get("API_TELEGRAM", "")
-    MODE = os.environ.get("MODE", "webhook")
+    MODE = os.environ.get("MODE", "webhook1")
     WEBHOOK_URL = os.environ.get("WEBHOOK_URL", "")
     LOG_LEVEL = os.environ.get("LOG_LEVEL", "INFO").upper()
 
