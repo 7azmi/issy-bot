@@ -4,11 +4,11 @@ import os
 import sys
 from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
 
-
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from app.handlers import *
 
 load_dotenv("app/.env")
+
 
 def error(update, context):
     """Log Errors caused by Updates."""
@@ -47,6 +47,7 @@ def main():
 
     updater.idle()
 
+
 class DefaultConfig:
     PORT = int(os.environ.get("PORT", 5000))
     TELEGRAM_TOKEN = os.environ.get("API_TELEGRAM", "")
@@ -60,6 +61,7 @@ class DefaultConfig:
             format="%(asctime)s - %(levelname)s - %(message)s",
             level=DefaultConfig.LOG_LEVEL,
         )
+
 
 if __name__ == "__main__":
     # Enable logging

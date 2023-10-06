@@ -58,7 +58,7 @@ def echo(update, context):
                 message_id = int(match.group(2))
                 if "Send" in message_text:
                     reply_text = message_text.replace("Send", "").strip()
-                    reply_to_message(context.bot, user_id, reply_text, message_id)
+                    context.send_message(context.bot, user_id, reply_text, message_id)
             else:
                 update.message.reply_text("Could not extract user ID and message ID from the feedback message.")
 
@@ -111,8 +111,7 @@ def language_callback(update, context):
         #show_en(update)
 
 
-async def reply_to_message(bot: telegram.Bot, user_id: int, message: str, message_id: int) -> None:
-    await bot.send_message(chat_id=user_id, text=message, reply_to_message_id=message_id)
+
 
 def contribute_command(update, context):
     pass
