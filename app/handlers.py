@@ -100,13 +100,13 @@ def language_callback(update, context):
     language = query.data
     if language == 'arabic':
         query.answer()
-        query.message.reply_text(read_txt_file('../FAQ/AR/hello.txt'))
+        query.message.reply_text(read_txt_file('FAQ/AR/hello.txt'))
         query.message.reply_text('لتصفح الأسئلة الشائعة:\n/menu_ar')
         #show_ar(update)
 
     elif language == 'english':
         query.answer()
-        query.message.reply_text(read_txt_file('../FAQ/EN/hello.txt'))
+        query.message.reply_text(read_txt_file('FAQ/EN/hello.txt'))
         query.message.reply_text('Browse FAQ :\n/menu_en')
         #show_en(update)
 
