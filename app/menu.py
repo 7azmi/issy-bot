@@ -6,19 +6,19 @@ data_ar = {}
 
 
 def load_data():
-    data_en['Registrations'] = extract_qa('../FAQ/EN/registration.txt')
-    data_en['Visa'] = extract_qa('../FAQ/EN/visa.txt')
-    data_en['Student life'] = extract_qa('../FAQ/EN/studentLife.txt')
-    data_en['Services'] = extract_qa('../FAQ/EN/services.txt')
-    data_en['Donate'] = extract_qa('../FAQ/EN/donation.txt')
-    data_en['Faculties'] = extract_qa('../FAQ/EN/YSAG.txt')
+    data_en['Registrations'] = extract_qa('FAQ/EN/registration.txt')
+    data_en['Visa'] = extract_qa('FAQ/EN/visa.txt')
+    data_en['Student life'] = extract_qa('FAQ/EN/studentLife.txt')
+    data_en['Services'] = extract_qa('FAQ/EN/services.txt')
+    data_en['Donate'] = extract_qa('FAQ/EN/donation.txt')
+    data_en['Faculties'] = extract_qa('FAQ/EN/YSAG.txt')
 
-    data_ar['التسجيل في الجامعة'] = extract_qa('../FAQ/AR/registration.txt')
-    data_ar['التأشيرة'] = extract_qa('../FAQ/AR/visa.txt')
-    data_ar['حياة الطالب'] = extract_qa('../FAQ/AR/studentLife.txt')
-    data_ar['الخدمات'] = extract_qa('../FAQ/AR/services.txt')
-    data_ar['تبرع'] = extract_qa('../FAQ/AR/donation.txt')
-    data_ar['الكليات'] = extract_qa('../FAQ/AR/YSAG.txt')
+    data_ar['التسجيل في الجامعة'] = extract_qa('FAQ/AR/registration.txt')
+    data_ar['التأشيرة'] = extract_qa('FAQ/AR/visa.txt')
+    data_ar['حياة الطالب'] = extract_qa('FAQ/AR/studentLife.txt')
+    data_ar['الخدمات'] = extract_qa('FAQ/AR/services.txt')
+    data_ar['تبرع'] = extract_qa('FAQ/AR/donation.txt')
+    data_ar['الكليات'] = extract_qa('FAQ/AR/YSAG.txt')
 
 
 def show_ar(update: Update) -> None:
