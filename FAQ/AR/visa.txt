@@ -49,6 +49,14 @@ A:
  SEV (single entry visa )
 2- إذا  لم تستطع الحصول على الSEV من السفارة يمكنك الحصول عليها عند القدوم للمطار [للطلاب اليمنيين] ولكن خذ في عين 
 الاعتبار أن هناك مخاطرة
+
+Q:
+ الحصول على رسالة التأكيد Confirmation Letter
+A:
+1. my.utm.my (UTM Portal)
+2. Profile
+3. Academic verification
+
 Q:
 حالات أخرى 
 A:

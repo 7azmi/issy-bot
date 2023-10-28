@@ -52,3 +52,10 @@ Other cases
 A:
 You can go to this link from EMGS and search for your specific case and see its solution:
 https://educationmalaysia.gov.my/faq/#who-has-to-apply-for-a-special-pass-for-me
+
+Q:
+Getting Confirmation Letter
+A:
+1. my.utm.my (UTM Portal)
+2. Profile
+3. Academic verification
