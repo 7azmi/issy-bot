@@ -1,0 +1,24 @@
+# docker-compose.yml
+version: '3.8' # Use a recent version
+
+services:
+  telegram-bot:
+    build: . # Build the image from the Dockerfile in the current directory
+    container_name: my-telegram-chat-bot # Optional: Give the container a specific name
+    env_file:
+      - .env # Load environment variables from the .env file in the current directory
+    volumes:
+      # Mount the named volume 'bot_data' to the '/data' directory inside the container
+      - bot_data:/data
+    restart: unless-stopped # Restart policy for the container
+    # Optional: Add healthcheck if your bot has a way to signal health
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:8080/health"] # Example
+    #   interval: 1m30s
+    #   timeout: 10s
+    #   retries: 3
+
+volumes:
+  # Define the named volume that will persist data
+  bot_data:
+    driver: local # Use the default local driver for persistence on the host machine
